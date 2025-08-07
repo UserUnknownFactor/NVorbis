@@ -47,21 +47,26 @@ namespace NVorbis.Ogg
             }
             else
             {
-                // check the sequence number
                 var seqNo = BitConverter.ToInt32(buf, 18);
-                isResync |= seqNo != _lastSeqNo + 1;
+                // Handle sequence number wraparound properly
+                var expectedSeqNo = _lastSeqNo + 1;
+                if (expectedSeqNo < 0) // wraparound
+                    expectedSeqNo = 0;
+
+                isResync |= seqNo != expectedSeqNo;
                 _lastSeqNo = seqNo;
             }
 
-            // there must be at least one packet with data
             var ttl = 0;
             for (var i = 0; i < buf[26]; i++)
             {
                 ttl += buf[27 + i];
             }
+
             if (ttl == 0)
             {
-                return false;
+                // Empty page - this is allowed, just skip it
+                return true;
             }
 
             _pageQueue.Enqueue((buf, isResync));
@@ -196,8 +201,11 @@ namespace NVorbis.Ogg
             long? granulePos = null;
             if (isLast)
             {
-                granulePos = BitConverter.ToInt64(pageBuf, 6);
-
+                var gp = BitConverter.ToInt64(pageBuf, 6);
+                if (gp >= 0)
+                {
+                    granulePos = gp;
+                }
                 // fifth, set flags from the end page
                 if (((PageFlags)pageBuf[5] & PageFlags.EndOfStream) != 0 || (_isEndOfStream && _pageQueue.Count == 0))
                 {
