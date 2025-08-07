@@ -1,7 +1,7 @@
-NVorbis    [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ioctlLR/NVorbis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+NVorbis  
 -------
 
-NVorbis is a .Net library for decoding Xiph.org Vorbis files. It is designed to run in partial trust environments and does not require P/Invoke or unsafe code. It is built for .Net Standard 2.0 and .Net Framework 4.5.
+NVorbis is a .Net library for decoding Xiph.org Vorbis files. It is designed to run in partial trust environments and does not require P/Invoke or unsafe code. It is built for .Net Standard 2.1 and .Net Framework 4.8.
 
 This implementation is based on the Vorbis specification found on xiph.org. The MDCT and Huffman codeword generator were borrowed from public domain implementations in https://github.com/nothings/stb/blob/master/stb_vorbis.c.
 
@@ -46,4 +46,4 @@ If you are using [NAudio](https://github.com/naudio/NAudio), support is availabl
 
 Support for [OpenTK](https://github.com/opentk/opentk) also exists and can be downloaded on [NuGet](https://www.nuget.org/packages/NVorbis.OpenTKSupport/).
 
-If you have any questions or comments, feel free to join us on Gitter.  If you have any issues or feature requests, please submit them in the issue tracker.
+If you have any issues or feature requests, please submit them in the issue tracker.
